@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "ne8BRdQtA1NkFYTEJkglghFF7Z71TZ4CHHa8Us5k2fA=",
+  "Source": "M223PunchclockDotnet",
+  "BasePath": "_content/M223PunchclockDotnet",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
