@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using M223PunchclockDotnet.Service;
+using M223PunchclockDotnet.Model;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+    
+     builder.Services.AddDbContext<DatabaseContext>(options =>
+            options.UseNpgsql("Host=db;Database=postgres;Username=postgres;Password=postgres"));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -26,6 +31,17 @@ if (app.Environment.IsDevelopment())
         options.RoutePrefix = "swagger";
     });
 }
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<DatabaseContext>();
+    context.Database.EnsureCreated();
+    // DbInitializer.Initialize(context);
+}
+
 
 app.UseStaticFiles();
 

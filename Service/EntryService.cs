@@ -1,12 +1,26 @@
 ﻿using M223PunchclockDotnet.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace M223PunchclockDotnet.Service
 {
     public class EntryService
     {
-        public IEnumerable<Entry> FindAll()
+        private DatabaseContext _databaseContext; 
+
+        public EntryService(DatabaseContext databaseContext){
+            _databaseContext = databaseContext;
+        }
+        public Task<List<Entry>> FindAll()
         {
-            return new List<Entry>();
+            return _databaseContext.Entries.ToListAsync();
+        }
+
+        public async Task<Entry> AddEntry(Entry entry)
+        {
+            _databaseContext.Entries.Add(entry);
+            await _databaseContext.SaveChangesAsync();
+
+            return entry;
         }
     }
 }
