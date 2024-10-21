@@ -1,4 +1,4 @@
-const URL = 'http://localhost:8080';
+const URL = '';
 let entries = [];
 
 const dateAndTimeToDate = (dateString, timeString) => {
@@ -12,7 +12,7 @@ const createEntry = (e) => {
     entry['checkIn'] = dateAndTimeToDate(formData.get('checkInDate'), formData.get('checkInTime'));
     entry['checkOut'] = dateAndTimeToDate(formData.get('checkOutDate'), formData.get('checkOutTime'));
 
-    fetch(`${URL}/entries`, {
+    fetch(`${URL}/entry`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -27,7 +27,7 @@ const createEntry = (e) => {
 };
 
 const indexEntries = () => {
-    fetch(`${URL}/entries`, {
+    fetch(`${URL}/entry`, {
         method: 'GET'
     }).then((result) => {
         result.json().then((result) => {
