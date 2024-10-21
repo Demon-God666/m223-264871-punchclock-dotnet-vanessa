@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../build/M223PunchclockDotnet.props" />
-</Project>
