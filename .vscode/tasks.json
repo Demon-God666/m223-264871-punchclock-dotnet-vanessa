@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/M223PunchclockDotnet.sln"
+                "${workspaceFolder}/src/M223PunchclockDotnet/M223PunchclockDotnet.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
