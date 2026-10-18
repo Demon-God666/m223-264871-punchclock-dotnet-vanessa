@@ -12,7 +12,7 @@ const createEntry = (e) => {
     entry['checkIn'] = dateAndTimeToDate(formData.get('checkInDate'), formData.get('checkInTime'));
     entry['checkOut'] = dateAndTimeToDate(formData.get('checkOutDate'), formData.get('checkOutTime'));
 
-    fetch(`${URL}/entry`, {
+    fetch(`${URL}/entries`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -27,7 +27,7 @@ const createEntry = (e) => {
 };
 
 const indexEntries = () => {
-    fetch(`${URL}/entry`, {
+    fetch(`${URL}/entries`, {
         method: 'GET'
     }).then((result) => {
         result.json().then((result) => {

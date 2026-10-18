@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace M223PunchclockDotnet.Controllers
 {
     [ApiController]
-    [Route("entry")]
+    [Route("entries")]
     public class EntryController : ControllerBase
     {
         private readonly EntryService _entryService;
