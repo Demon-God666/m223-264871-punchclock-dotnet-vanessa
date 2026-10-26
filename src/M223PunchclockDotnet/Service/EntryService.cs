@@ -5,9 +5,10 @@ namespace M223PunchclockDotnet.Service
 {
     public class EntryService
     {
-        private DatabaseContext _databaseContext; 
+        private DatabaseContext _databaseContext;
 
-        public EntryService(DatabaseContext databaseContext){
+        public EntryService(DatabaseContext databaseContext)
+        {
             _databaseContext = databaseContext;
         }
         public Task<List<Entry>> FindAll()
@@ -34,12 +35,21 @@ namespace M223PunchclockDotnet.Service
             await _databaseContext.SaveChangesAsync();
         }
 
-        public async Task<Entry> UpdateEntry(Entry entry)
+        public async Task<bool> UpdateEntry(int id, Entry entry)
         {
-            _databaseContext.Entries.Update(entry);
+            var existingEntry = await _databaseContext.Entries.FindAsync(id);
+
+            if (existingEntry == null)
+            {
+                return false;
+            }
+
+            existingEntry.CheckIn = entry.CheckIn;
+            existingEntry.CheckOut = entry.CheckOut;
+
             await _databaseContext.SaveChangesAsync();
 
-            return entry;
+            return true;
         }
     }
 }

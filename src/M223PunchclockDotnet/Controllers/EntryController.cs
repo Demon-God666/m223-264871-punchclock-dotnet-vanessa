@@ -2,6 +2,7 @@ using System.Net.Mime;
 using M223PunchclockDotnet.Model;
 using M223PunchclockDotnet.Service;
 using Microsoft.AspNetCore.Mvc;
+using M223PunchclockDotnet.Dto;
 
 namespace M223PunchclockDotnet.Controllers
 {
@@ -24,13 +25,20 @@ namespace M223PunchclockDotnet.Controllers
             return Ok(allEntries);
         }
 
-        [HttpPost()]
+        [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType<Entry>(StatusCodes.Status201Created)]
-        public async Task<ActionResult<Entry>> AddEntry(Entry entry){
-            var newElement = await _entryService.AddEntry(entry);
+        public async Task<ActionResult<Entry>> AddEntry(EntryDto dto)
+        {
+            var entry = new Entry
+            {
+                CheckIn = dto.CheckIn!.Value,
+                CheckOut = dto.CheckOut!.Value
+            };
 
-            return CreatedAtAction(nameof(Get), new{id = entry.Id}, entry);
+            var newEntry = await _entryService.AddEntry(entry);
+
+            return CreatedAtAction(nameof(Get), new { id = newEntry.Id }, newEntry);
         }
 
         [HttpDelete("{id}")]
@@ -49,25 +57,19 @@ namespace M223PunchclockDotnet.Controllers
         }
 
         [HttpPut("{id}")]
-        [Consumes(MediaTypeNames.Application.Json)] 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Entry>> UpdateEntry(int id, Entry updatedEntry)  
-
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateEntry(int id, EntryDto dto)
         {
-                var entry = await _entryService.FindById(id);
-                if (entry == null)
-                {
-                    return NotFound();
-                }
-    
-                entry.CheckIn = updatedEntry.CheckIn;
-                entry.CheckOut = updatedEntry.CheckOut;
-    
-                await _entryService.UpdateEntry(entry);
-    
-                return Ok(entry);
-            }
+            var entry = new Entry
+            {
+                CheckIn = dto.CheckIn!.Value,
+                CheckOut = dto.CheckOut!.Value
+            };
+
+            await _entryService.UpdateEntry(id, entry);
+            return NoContent();
+        }
 
 
     }
