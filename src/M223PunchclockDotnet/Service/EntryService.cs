@@ -12,7 +12,9 @@ namespace M223PunchclockDotnet.Service
         }
         public Task<List<Entry>> FindAll()
         {
-            return _databaseContext.Entries.ToListAsync();
+            var entries = _databaseContext.Entries.Include(entry => entry.Category).Include(entry => entry.Tags).ToListAsync();
+
+            return entries;
         }
 
         public async Task<Entry> AddEntry(Entry entry)
