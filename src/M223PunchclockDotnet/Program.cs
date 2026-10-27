@@ -16,7 +16,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddScoped<CategoryService, CategoryService>();
+builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<EntryService>();
+builder.Services.AddScoped<TimeSummaryService>();
 builder.Services.AddScoped<ExampleDataService>();
 
 var app = builder.Build();
@@ -38,7 +40,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     var context = services.GetRequiredService<DatabaseContext>();
-    
+
     context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
     // DbInitializer.Initialize(context);

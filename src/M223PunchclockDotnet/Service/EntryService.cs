@@ -7,10 +7,14 @@ namespace M223PunchclockDotnet.Service
     public class EntryService
     {
         private DatabaseContext _databaseContext;
+        private readonly TimeSummaryService _timeSummaryService;
 
-        public EntryService(DatabaseContext databaseContext)
+        public EntryService(
+         DatabaseContext databaseContext,
+         TimeSummaryService timeSummaryService)
         {
             _databaseContext = databaseContext;
+            _timeSummaryService = timeSummaryService;
         }
         public async Task<List<EntryDto>> FindAll()
         {
@@ -30,6 +34,16 @@ namespace M223PunchclockDotnet.Service
 
             return entryDtos;
         }
+
+        public async Task<List<DateAndDurationDto>> GetTimeSummaries()
+        {
+            var entries = await FindAll();
+
+            var timeSummary = _timeSummaryService.CalculateSummaryPerDay(entries);
+
+            return timeSummary;
+        }
+
 
         public async Task<Entry> AddEntry(Entry entry)
         {
