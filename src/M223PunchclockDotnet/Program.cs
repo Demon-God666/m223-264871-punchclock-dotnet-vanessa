@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-    
+
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseNpgsql("Host=db;Database=postgres;Username=postgres;Password=postgres"));
 
@@ -37,6 +37,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     var context = services.GetRequiredService<DatabaseContext>();
+    context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
     // DbInitializer.Initialize(context);
 }

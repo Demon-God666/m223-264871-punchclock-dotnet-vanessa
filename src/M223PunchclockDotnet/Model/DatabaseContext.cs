@@ -40,7 +40,7 @@ namespace M223PunchclockDotnet.Model
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder.UseNpgsql("Host=db;Database=postgres;Username=postgres;Password=postgres");
+                => optionsBuilder.UseNpgsql("Host=db;Database=punchclock;Username=postgres;Password=postgres");
 
 
 
