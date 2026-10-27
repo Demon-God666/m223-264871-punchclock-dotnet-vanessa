@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddScoped<CategoryService, CategoryService>();
+builder.Services.AddScoped<ExampleDataService>();
 
 var app = builder.Build();
 
@@ -37,9 +38,19 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     var context = services.GetRequiredService<DatabaseContext>();
+    
     context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
     // DbInitializer.Initialize(context);
+    if (app.Environment.IsDevelopment() &&
+    app.Configuration.GetValue<bool>(
+        "Punchclock:ExampleData:Enabled"))
+    {
+        var exampleDataService =
+            services.GetRequiredService<ExampleDataService>();
+
+        await exampleDataService.CreateExampleDataAsync();
+    }
 }
 
 app.UseDefaultFiles();
