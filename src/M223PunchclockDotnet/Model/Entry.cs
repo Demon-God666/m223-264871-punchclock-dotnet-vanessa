@@ -12,7 +12,7 @@ namespace M223PunchclockDotnet.Model
         [Required]
         public DateTime CheckOut { get; set; }
 
-        public int? Category_ID {get; set;}
+        public int? CategoryId {get; set;}
 
         public Category? Category { get; set; }
 

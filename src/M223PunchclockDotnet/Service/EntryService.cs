@@ -1,20 +1,34 @@
-﻿using M223PunchclockDotnet.Model;
+﻿using M223PunchclockDotnet.Dto;
+using M223PunchclockDotnet.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace M223PunchclockDotnet.Service
 {
     public class EntryService
     {
-        private DatabaseContext _databaseContext; 
+        private DatabaseContext _databaseContext;
 
-        public EntryService(DatabaseContext databaseContext){
+        public EntryService(DatabaseContext databaseContext)
+        {
             _databaseContext = databaseContext;
         }
-        public Task<List<Entry>> FindAll()
+        public async Task<List<EntryDto>> FindAll()
         {
-            var entries = _databaseContext.Entries.Include(entry => entry.Category).Include(entry => entry.Tags).ToListAsync();
+            var entries = await _databaseContext.Entries
+                .Include(entry => entry.Category)
+                .Include(entry => entry.Tags)
+                .ToListAsync();
 
-            return entries;
+            var entryDtos = entries.Select(entry => new EntryDto
+            {
+                Id = entry.Id,
+                CheckIn = entry.CheckIn,
+                CheckOut = entry.CheckOut,
+                CategoryId = entry.CategoryId,
+                TagIds = entry.Tags?.Select(tag => tag.Id).ToList() ?? new()
+            }).ToList();
+
+            return entryDtos;
         }
 
         public async Task<Entry> AddEntry(Entry entry)

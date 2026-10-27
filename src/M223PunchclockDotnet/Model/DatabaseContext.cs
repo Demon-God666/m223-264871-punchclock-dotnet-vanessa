@@ -24,7 +24,7 @@ namespace M223PunchclockDotnet.Model
             modelBuilder.Entity<Entry>().ToTable("Entry")
             .HasOne(entry => entry.Category)
             .WithMany(category => category.Entries)
-            .HasForeignKey(entry => entry.Category_ID)
+            .HasForeignKey(entry => entry.CategoryId)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
 
