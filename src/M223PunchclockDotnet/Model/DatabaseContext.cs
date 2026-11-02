@@ -43,7 +43,8 @@ namespace M223PunchclockDotnet.Model
             .HasOne(entry => entry.User)
             .WithMany(user => user.Entries)
             .HasForeignKey(entry => entry.UserId)
-            .IsRequired(false);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Restrict);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

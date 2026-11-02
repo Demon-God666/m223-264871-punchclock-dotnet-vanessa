@@ -17,7 +17,8 @@ public class ExampleDataService
     {
         if (await _databaseContext.Categories.AnyAsync() ||
             await _databaseContext.Tags.AnyAsync() ||
-            await _databaseContext.Entries.AnyAsync())
+            await _databaseContext.Entries.AnyAsync() ||
+            await _databaseContext.ApplicationUsers.AnyAsync())
         {
             return;
         }
@@ -33,6 +34,9 @@ public class ExampleDataService
         var user1 = new ApplicationUser { UserName = "user1", Password = "password1" };
         var user2 = new ApplicationUser { UserName = "user2", Password = "password2" };
 
+        _databaseContext.ApplicationUsers.AddRange(user1, user2);
+        await _databaseContext.SaveChangesAsync();
+
         // Entries erstellen und Beziehungen setzen
         var now = DateTime.UtcNow;
 
@@ -44,7 +48,7 @@ public class ExampleDataService
                 now, DateTimeKind.Utc),
             Category = category1,
             Tags = new List<Tag> { tag1 },
-            User = user1
+            UserId = user1.Id
         };
 
         var entry2 = new Entry
@@ -55,7 +59,7 @@ public class ExampleDataService
                 now.AddHours(-3), DateTimeKind.Utc),
             Category = category2,
             Tags = new List<Tag> { tag2 },
-            User = user2
+            UserId = user2.Id
         };
 
         // Alle Entitäten vormerken
