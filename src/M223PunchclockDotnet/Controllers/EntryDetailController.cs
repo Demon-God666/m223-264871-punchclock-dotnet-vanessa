@@ -22,6 +22,7 @@ namespace M223PunchclockDotnet.Controllers
             var entries = await _context.Entries
                 .Include(entry => entry.Category)
                 .Include(entry => entry.Tags)
+                .Include(entry => entry.User)
                 .ToListAsync();
 
             var result = entries.Select(entry => new EntryDetailDto
@@ -29,7 +30,12 @@ namespace M223PunchclockDotnet.Controllers
                 Id = entry.Id,
                 CheckIn = entry.CheckIn,
                 CheckOut = entry.CheckOut,
-
+                User = entry.User == null ? null : new ApplicationUserDto
+                {
+                    Id = entry.User.Id,
+                    UserName = entry.User.UserName,
+                    Password = entry.User.Password
+                },
                 Category = entry.Category == null ? null : new CategoryDto
                 {
                     Id = entry.Category.Id,
@@ -52,6 +58,7 @@ namespace M223PunchclockDotnet.Controllers
             var entry = await _context.Entries
                 .Include(entry => entry.Category)
                 .Include(entry => entry.Tags)
+                .Include(entry => entry.User)
                 .FirstOrDefaultAsync(entry => entry.Id == id);
 
             if (entry == null)
@@ -64,7 +71,12 @@ namespace M223PunchclockDotnet.Controllers
                 Id = entry.Id,
                 CheckIn = entry.CheckIn,
                 CheckOut = entry.CheckOut,
-
+                User = entry.User == null ? null : new ApplicationUserDto
+                {
+                    Id = entry.User.Id,
+                    UserName = entry.User.UserName,
+                    Password = entry.User.Password
+                },
                 Category = entry.Category == null ? null : new CategoryDto
                 {
                     Id = entry.Category.Id,
