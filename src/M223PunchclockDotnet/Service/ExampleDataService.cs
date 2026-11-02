@@ -30,6 +30,9 @@ public class ExampleDataService
         var tag1 = new Tag { Title = "Urgent" };
         var tag2 = new Tag { Title = "Important" };
 
+        var user1 = new ApplicationUser { UserName = "user1", Password = "password1" };
+        var user2 = new ApplicationUser { UserName = "user2", Password = "password2" };
+
         // Entries erstellen und Beziehungen setzen
         var now = DateTime.UtcNow;
 
@@ -40,7 +43,8 @@ public class ExampleDataService
             CheckOut = DateTime.SpecifyKind(
                 now, DateTimeKind.Utc),
             Category = category1,
-            Tags = new List<Tag> { tag1 }
+            Tags = new List<Tag> { tag1 },
+            User = user1
         };
 
         var entry2 = new Entry
@@ -50,7 +54,8 @@ public class ExampleDataService
             CheckOut = DateTime.SpecifyKind(
                 now.AddHours(-3), DateTimeKind.Utc),
             Category = category2,
-            Tags = new List<Tag> { tag2 }
+            Tags = new List<Tag> { tag2 },
+            User = user2
         };
 
         // Alle Entitäten vormerken

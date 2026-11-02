@@ -5,19 +5,14 @@ namespace M223PunchclockDotnet.Model
     public class Entry
     {
         public int Id { get; set; }
-
         [Required]
         public DateTime CheckIn { get; set; }
-
         [Required]
         public DateTime CheckOut { get; set; }
-
         public int? CategoryId {get; set;}
-
         public Category? Category { get; set; }
-
         public List<Tag>? Tags { get; set; } = new();
-
-
+        public int? UserId { get; set; }
+        public  ApplicationUser? User { get; set; }
     }
 }

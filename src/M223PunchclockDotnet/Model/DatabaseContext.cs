@@ -14,8 +14,9 @@ namespace M223PunchclockDotnet.Model
 
 
         public DbSet<Entry> Entries { get; set; }
-        public DbSet<Category> Categories {get;set;}
-        public DbSet<Tag> Tags {get;set;}
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,6 +38,12 @@ namespace M223PunchclockDotnet.Model
             entry => entry.HasOne(typeof(Entry)).WithMany().HasForeignKey("entry_id")
             );
 
+            modelBuilder.Entity<ApplicationUser>().ToTable("ApplicationUser");
+            modelBuilder.Entity<Entry>().ToTable("Entry")
+            .HasOne(entry => entry.User)
+            .WithMany(user => user.Entries)
+            .HasForeignKey(entry => entry.UserId)
+            .IsRequired(false);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
