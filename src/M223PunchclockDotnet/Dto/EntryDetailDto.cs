@@ -8,7 +8,7 @@ namespace M223PunchclockDotnet.Dto
 
         public CategoryDto? Category { get; set; }
         public List<TagDto> Tags { get; set; } = new();
-        public int UserId { get; set; }
+        public ApplicationUserDto? User { get; set; }
     }
 
     public class CategoryDto
@@ -23,10 +23,10 @@ namespace M223PunchclockDotnet.Dto
         public string Title { get; set; } = string.Empty;
     }
 
-        public class ApplicationUserDto
+    public class ApplicationUserDto
     {
-        public int Id { get; set; } 
-        public string UserName { get; set; } = "";
-        public string Password { get; set; } = "";
+        public int Id { get; set; }
+        public string UserName { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
     }
 }

@@ -21,6 +21,7 @@ namespace M223PunchclockDotnet.Service
             var entries = await _databaseContext.Entries
                 .Include(entry => entry.Category)
                 .Include(entry => entry.Tags)
+                .Include(entry => entry.User)
                 .ToListAsync();
 
             var entryDtos = entries.Select(entry => new EntryDto
@@ -29,7 +30,8 @@ namespace M223PunchclockDotnet.Service
                 CheckIn = entry.CheckIn,
                 CheckOut = entry.CheckOut,
                 CategoryId = entry.CategoryId,
-                TagIds = entry.Tags?.Select(tag => tag.Id).ToList() ?? new()
+                TagIds = entry.Tags?.Select(tag => tag.Id).ToList() ?? new(),
+                UserId = entry.UserId
             }).ToList();
 
             return entryDtos;
