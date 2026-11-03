@@ -14,7 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
-    options.UseNpgsql("Host=db;Database=postgres;Username=postgres;Password=postgres"));
+    options.UseNpgsql(
+        "Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=postgres"));
 
 // JWT: Public Key einlesen
 RSA publicKey = RSA.Create();
