@@ -28,5 +28,14 @@ namespace M223PunchclockDotnet.Tests.Tests
             Assert.That(result, Has.Count.EqualTo(1));
             Assert.That(result[0].Duration, Is.EqualTo(TimeSpan.FromHours(9)));
         }
+
+        [Test]
+        public void TimeSummary_checkInAfterCheckout_ReturnsError()
+        {
+            var service = new TimeSummaryService(null);
+            
+        }
     }
+    
+
 }

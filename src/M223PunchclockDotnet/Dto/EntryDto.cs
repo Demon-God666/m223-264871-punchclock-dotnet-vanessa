@@ -10,5 +10,6 @@ namespace M223PunchclockDotnet.Dto
         public List<int> TagIds { get; set; } = new();
         public int? UserId { get; set; }
     
+        public string? Description { get; set; }
     }
 }

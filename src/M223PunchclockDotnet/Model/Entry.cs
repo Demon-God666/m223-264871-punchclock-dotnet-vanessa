@@ -14,5 +14,7 @@ namespace M223PunchclockDotnet.Model
         public List<Tag>? Tags { get; set; } = new();
         public int? UserId { get; set; }
         public  ApplicationUser? User { get; set; }
+        public string? Description { get; set; }
+
     }
 }
