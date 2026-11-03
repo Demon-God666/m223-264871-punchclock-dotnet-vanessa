@@ -31,7 +31,8 @@ namespace M223PunchclockDotnet.Service
                 CheckOut = entry.CheckOut,
                 CategoryId = entry.CategoryId,
                 TagIds = entry.Tags?.Select(tag => tag.Id).ToList() ?? new(),
-                UserId = entry.UserId
+                UserId = entry.UserId,
+                Description = entry.Description
             }).ToList();
 
             return entryDtos;

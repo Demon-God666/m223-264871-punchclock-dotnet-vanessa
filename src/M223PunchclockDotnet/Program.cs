@@ -113,8 +113,7 @@ using (var scope = app.Services.CreateScope())
 
     var context = services.GetRequiredService<DatabaseContext>();
 
-    context.Database.EnsureDeleted();
-    context.Database.EnsureCreated();
+    await context.Database.MigrateAsync();
 
     // DbInitializer.Initialize(context);
 
